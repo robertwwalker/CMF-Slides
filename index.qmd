@@ -31,7 +31,32 @@ library(tidyverse)
 Files <- dir()
 Files
 library(DT)
-Files.df <- data.frame(Files=Files) %>% mutate(link=paste0(paste0('<a href=',paste0("\"https://robertwwalker.github.io/CMF-Slides/",Files,"\"", sep=""),' > ', sep=""),Files,'</a>',sep=""))
+Files.df <- data.frame(Files=Files) %>%
+  mutate(
+    Link=paste0(paste0(
+    '<a href=',
+    paste0("\"https://robertwwalker.github.io/CMF-Slides/",
+           Files,"\"", 
+           sep=""),
+    ' > ', sep=""),
+    Files,
+    ' Slides</a>',
+    sep="")
+    ) %>% 
+  filter(startsWith(Files, "CMF-Week")) %>%
+  mutate(File=paste0(paste0(
+    '<a href=',
+    paste0("\"https://github.com/robertwwalker/CMF-Slides/tree/main/",
+           Files,"/\"", 
+           sep=""),
+    ' > ', sep=""),
+    Files,
+    '</a>',
+    sep="")
+    ) %>% 
+  mutate(Week = as.numeric(str_remove(Files, "CMF-Week-"))) %>%
+  relocate(Week, .before = Files) %>%
+  arrange(Week) %>% select(-Files)
 datatable(Files.df, escape = FALSE)
 ```
 
