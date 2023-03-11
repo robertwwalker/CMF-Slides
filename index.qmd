@@ -1,0 +1,44 @@
+---
+title: "CMF-Slides"
+bibliography: "bibliography.bib"
+nocite: |
+     @*
+author: "Robert W. Walker"
+format: 
+   html:
+     self-contained-math: true
+     code-fold: true
+     code-copy: hover
+     code-block-border-left: true
+     df-print: paged
+     fig-format: retina
+     footnotes-hover: true
+     html-math-method: katex
+     mainfont: Playfair Display
+     toc: true
+     toc-title: Navigation
+     theme: simplex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message=FALSE, warning=FALSE)
+```
+
+## What's Here?
+
+```{r}
+library(tidyverse)
+Files <- dir()
+Files
+library(DT)
+Files.df <- data.frame(Files=Files) %>% mutate(link=paste0(paste0('<a href=',paste0("\"https://robertwwalker.github.io/CMF-Slides/",Files,"\"", sep=""),' > ', sep=""),Files,'</a>',sep=""))
+datatable(Files.df, escape = FALSE)
+```
+
+
+# References
+
+```{r}
+knitr::write_bib(names(sessionInfo()$otherPkgs), file="bibliography.bib")
+```
+
